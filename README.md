@@ -14,6 +14,7 @@ FabPulse watches a stream of equipment readings, spots process drift, and assemb
 - Open an incident to see the signals, likely cause, confidence, evidence, and suggested next checks.
 - Run a bounded triage workflow with separate signal, procedure, and impact steps.
 - Ask for a read-only equipment trend or procedure search through the included MCP server.
+- Optionally run a Google ADK agent that uses the MCP tools and exposes its agent card over A2A.
 - Replay named scenarios and score diagnosis, evidence grounding, action safety, and response time with the evaluation harness.
 - Inspect service health and request metrics, then run the app locally or in containers.
 
@@ -43,6 +44,18 @@ python -m app.mcp_server
 ```
 
 It uses the MCP Python SDK over stdio and exposes read-only tools for recent telemetry, equipment history, and procedure lookup. The ticket-draft tool returns a draft only; it never connects to a real ticketing system.
+
+### Optional Google ADK agent and A2A endpoint
+
+The dashboard works without model credentials. For a real LLM tool-use path, install the optional agent dependencies, set a Gemini API key, and start the A2A endpoint:
+
+```bash
+pip install -r requirements-agent.txt
+export GOOGLE_API_KEY="your-key"
+uvicorn agent_service.a2a_server:app --host 127.0.0.1 --port 8001
+```
+
+The agent connects to the local MCP server over stdio and exposes an A2A agent card at `http://127.0.0.1:8001/.well-known/agent-card.json`. The MCP tool allowlist is explicit. This optional service is separate from the dashboard's deterministic triage endpoint, and it still cannot control equipment or create external tickets.
 
 ## Run with Docker
 
@@ -98,7 +111,9 @@ data/
   procedures.json     Fictional work instructions for the demo
   evaluation_scenarios.jsonl
 docs/images/          Repository visuals (SVG)
-deploy/k8s/           Kubernetes deployment, service, and autoscaling examples
+deploy/k8s/           Single-replica Kubernetes deployment baseline
+deploy/examples/      HPA example for a future shared-state version
+agent_service/        Optional Google ADK agent and A2A server
 ```
 
 ## Kubernetes
@@ -107,7 +122,7 @@ Manifests in `deploy/k8s/` show a single-replica, resource-limited deployment, p
 
 ## Current scope
 
-The local demo uses a deterministic triage engine so it works without API keys or paid model access. The interfaces are intentionally separated so an ADK or vLLM-backed model can be added and measured without changing the event simulator or safety boundary. Model serving, GPU inference optimization, and a production A2A deployment are not claimed as implemented here.
+The dashboard's triage route uses a deterministic engine so it works without API keys or paid model access. The optional ADK service adds real Gemini tool use through MCP and A2A interoperability. Model serving, GPU inference optimization, and production A2A deployment are not claimed as implemented here.
 
 ## License
 
