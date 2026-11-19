@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fabpulse-api
+  namespace: fabpulse-demo
+  labels:
+    app.kubernetes.io/name: fabpulse-api
+spec:
+  selector:
+    app.kubernetes.io/name: fabpulse-api
+  ports:
+    - name: http
+      port: 8000
+      targetPort: http
+  type: ClusterIP

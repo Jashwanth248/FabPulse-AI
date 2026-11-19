@@ -1,0 +1,14 @@
+services:
+  fabpulse:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      SIMULATOR_INTERVAL_SECONDS: "2"
+      MAX_EVENT_HISTORY: "250"
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true

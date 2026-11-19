@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="390" viewBox="0 0 1400 390" role="img" aria-labelledby="title desc">
+  <title id="title">FabPulse AI simulated semiconductor operations view</title>
+  <desc id="desc">Illustrated cleanroom, wafer rings, telemetry trace, and fictional tool status cards.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#091321"/><stop offset="1" stop-color="#13263a"/></linearGradient>
+    <linearGradient id="wafer" x2="1" y2="1"><stop stop-color="#63eedb" stop-opacity=".9"/><stop offset=".45" stop-color="#328dd4" stop-opacity=".45"/><stop offset="1" stop-color="#a3c5fc" stop-opacity=".12"/></linearGradient>
+    <linearGradient id="line" x2="1"><stop stop-color="#4fd1c5"/><stop offset="1" stop-color="#70a8ff"/></linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="12" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1400" height="390" rx="24" fill="url(#bg)"/>
+  <circle cx="1015" cy="175" r="170" fill="#1caeaa" opacity=".07" filter="url(#glow)"/>
+  <g opacity=".56" stroke="#66869b" fill="none">
+    <path d="M760 290V116h120v174M790 116V80h57v36M889 290V148h105v142M906 148v-36h69v36M1010 290V92h91v198M1030 92V61h50v31M1118 290V132h83v158M1137 132v-28h47v28"/>
+    <path d="M735 292h500M760 238h445M760 193h445M760 149h445" opacity=".45"/>
+    <path d="M798 141v96m31-96v96m102-66v96m36-96v96m65-145v145m34-145v145m77-113v113m29-113v113" stroke="#90b5c7" opacity=".45"/>
+  </g>
+  <g fill="#b8cfdd" opacity=".66"><rect x="786" y="183" width="22" height="11" rx="2"/><rect x="817" y="183" width="22" height="11" rx="2"/><rect x="919" y="215" width="24" height="12" rx="2"/><rect x="1034" y="159" width="28" height="12" rx="2"/><rect x="1144" y="198" width="22" height="11" rx="2"/></g>
+  <g transform="translate(1110 188)"><circle r="122" fill="#0d1b29" stroke="#3c8ca9" stroke-width="2"/><circle r="107" fill="url(#wafer)" stroke="#83d9e0" stroke-opacity=".7"/><circle r="86" fill="none" stroke="#c8fff2" stroke-opacity=".36"/><circle r="64" fill="none" stroke="#c8fff2" stroke-opacity=".3"/><circle r="41" fill="none" stroke="#c8fff2" stroke-opacity=".25"/><circle r="15" fill="#102a3b" stroke="#9cece4" stroke-opacity=".55"/>
+    <g stroke="#e7ffff" stroke-opacity=".15"><path d="M-107 0h214M0-107v214M-76-76l152 152M76-76L-76 76"/></g><path d="M0-107a107 107 0 0 1 90 49" fill="none" stroke="#c4fff0" stroke-width="3" filter="url(#glow)"/>
+  </g>
+  <g fill="#fff" font-family="Inter,Segoe UI,sans-serif"><text x="74" y="99" fill="#67ddcf" font-size="13" font-weight="700" letter-spacing="3">SMART MANUFACTURING · SIMULATED DATA</text><text x="70" y="169" font-size="56" font-weight="750" letter-spacing="-2">FabPulse AI</text><text x="74" y="207" fill="#b2c2d0" font-size="19">Real-time incident response for a simulated semiconductor fab.</text><text x="74" y="241" fill="#91a5b8" font-size="14">Telemetry · evidence-backed triage · safe-by-design tooling</text></g>
+  <g transform="translate(74 288)"><rect width="170" height="42" rx="9" fill="#173b3b" stroke="#2e6862"/><circle cx="18" cy="21" r="4" fill="#65e3b0"/><text x="31" y="25" fill="#c7f5e7" font-family="Inter,Segoe UI,sans-serif" font-size="12" font-weight="600">LIVE SIMULATION</text><rect x="184" width="178" height="42" rx="9" fill="#17283b" stroke="#304d66"/><text x="201" y="25" fill="#bdcee0" font-family="Inter,Segoe UI,sans-serif" font-size="12">NO TOOL CONTROL</text></g>
+  <g transform="translate(1250 48)"><rect width="112" height="74" rx="12" fill="#101d2a" stroke="#293c4d"/><text x="15" y="23" fill="#7890a4" font-family="Inter,Segoe UI,sans-serif" font-size="9" letter-spacing="1">LINE HEALTH</text><text x="15" y="53" fill="#dffbf1" font-family="Inter,Segoe UI,sans-serif" font-size="26" font-weight="700">96%</text><circle cx="92" cy="48" r="5" fill="#62dba4"/></g>
+  <path d="M385 324c40-6 42-45 80-41s50 29 87 19 49-36 80-33 38 31 71 24 48-27 78-22" fill="none" stroke="url(#line)" stroke-width="2.5" opacity=".8"/><path d="M385 324c40-6 42-45 80-41s50 29 87 19 49-36 80-33 38 31 71 24 48-27 78-22" fill="none" stroke="#5cd7cb" stroke-width="7" opacity=".13" filter="url(#glow)"/>
+</svg>

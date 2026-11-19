@@ -1,0 +1,1 @@
+"""FabPulse AI demo application."""
