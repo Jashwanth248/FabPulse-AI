@@ -1,0 +1,114 @@
+# FabPulse AI
+
+### Real-time incident response for a simulated semiconductor fab
+
+FabPulse watches a stream of equipment readings, spots process drift, and assembles an evidence-backed incident brief for an engineer. It is designed like a small production system: the event stream is live, each finding has traceable evidence, the tools are permission-limited, and every recommendation is evaluated before it is trusted.
+
+> **Demo data only.** FabPulse does not connect to a real fab, factory control system, or Micron system. The simulator creates fictional equipment and lot data so the workflow can be explored safely.
+
+![FabPulse AI overview](docs/images/fabpulse-hero.svg)
+
+## What you can do
+
+- Watch synthetic tool telemetry arrive in real time and see excursions turn into incidents.
+- Open an incident to see the signals, likely cause, confidence, evidence, and suggested next checks.
+- Run a bounded triage workflow with separate signal, procedure, and impact steps.
+- Ask for a read-only equipment trend or procedure search through the included MCP server.
+- Replay named scenarios and score diagnosis, evidence grounding, action safety, and response time with the evaluation harness.
+- Inspect service health and request metrics, then run the app locally or in containers.
+
+## A quick look
+
+![System architecture](docs/images/architecture.svg)
+
+The screen uses a dark operations-room palette, compact telemetry cards, and clear severity colors. The UI is plain HTML/CSS/JavaScript served by FastAPI, so the demo has no frontend build step.
+
+## Run locally
+
+Python 3.11 or newer is required.
+
+```bash
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+```
+
+Open [http://127.0.0.1:8000](http://127.0.0.1:8000). The simulator starts automatically. Use the **Replay scenario** menu to trigger a known excursion, or open an incident and run **Build triage brief**.
+
+To run the MCP server in a second terminal:
+
+```bash
+python -m app.mcp_server
+```
+
+It uses the MCP Python SDK over stdio and exposes read-only tools for recent telemetry, equipment history, and procedure lookup. The ticket-draft tool returns a draft only; it never connects to a real ticketing system.
+
+## Run with Docker
+
+```bash
+docker compose up --build
+```
+
+The web app is available on port `8000`. The container runs as a non-root user and has a health check.
+
+## Run the evaluation harness
+
+```bash
+python -m app.evaluation --scenarios data/evaluation_scenarios.jsonl
+```
+
+The harness replays fixed scenarios through the same triage functions used by the API and writes a JSON report to `artifacts/evaluation-report.json`. It reports diagnosis match, evidence coverage, safe-action rate, and elapsed time. These are demo benchmark results, not claims about factory production performance.
+
+## API and live feed
+
+| Route | Purpose |
+| --- | --- |
+| `GET /api/health` | Readiness and simulator status |
+| `GET /api/summary` | Current line summary and key metrics |
+| `GET /api/events?limit=40` | Recent telemetry events |
+| `GET /api/incidents` | Active and recent incidents |
+| `GET /api/incidents/{incident_id}` | One incident with evidence |
+| `POST /api/incidents/{incident_id}/triage` | Build a bounded triage brief |
+| `POST /api/scenarios/{scenario_id}/replay` | Inject a named demo scenario |
+| `GET /api/live` | Server-Sent Events stream |
+| `GET /metrics` | Prometheus text metrics |
+
+OpenAPI docs are at `/docs` while the service is running.
+
+## Safety and design choices
+
+- The agent workflow can read telemetry and procedures. It cannot control equipment.
+- Any ticket operation is a local draft. The demo never sends a message or changes an external system.
+- User-provided notes are treated as untrusted evidence. The workflow uses typed tool inputs, bounded results, and an explicit tool allowlist.
+- Recommendations include source references and a confidence label; low-confidence cases ask for human review.
+- The live stream and dashboard use generated data. No credentials or private operational data are needed.
+
+## Project map
+
+```text
+app/
+  main.py             FastAPI endpoints, live stream, metrics
+  simulator.py        Synthetic equipment and lot event stream
+  triage.py           Bounded investigation workflow and procedure retrieval
+  mcp_server.py       MCP tools for read-only factory context and ticket drafts
+  evaluation.py       Repeatable scenario evaluation CLI
+  static/index.html   Responsive dashboard and event timeline
+data/
+  procedures.json     Fictional work instructions for the demo
+  evaluation_scenarios.jsonl
+docs/images/          Repository visuals (SVG)
+deploy/k8s/           Kubernetes deployment, service, and autoscaling examples
+```
+
+## Kubernetes
+
+Manifests in `deploy/k8s/` show a resource-limited deployment, readiness/liveness probes, a service, and an HPA. They are an example deployment baseline; adapt image names, registry credentials, and cluster policies before using them in a real environment.
+
+## Current scope
+
+The local demo uses a deterministic triage engine so it works without API keys or paid model access. The interfaces are intentionally separated so an ADK or vLLM-backed model can be added and measured without changing the event simulator or safety boundary. Model serving, GPU inference optimization, and a production A2A deployment are not claimed as implemented here.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
