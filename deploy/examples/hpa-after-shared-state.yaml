@@ -1,3 +1,4 @@
+# Example only. Add shared event persistence and cross-pod event delivery first.
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:

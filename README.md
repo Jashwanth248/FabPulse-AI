@@ -103,7 +103,7 @@ deploy/k8s/           Kubernetes deployment, service, and autoscaling examples
 
 ## Kubernetes
 
-Manifests in `deploy/k8s/` show a resource-limited deployment, readiness/liveness probes, a service, and an HPA. They are an example deployment baseline; adapt image names, registry credentials, and cluster policies before using them in a real environment.
+Manifests in `deploy/k8s/` show a single-replica, resource-limited deployment, probes, and a service. The current demo keeps events and incidents in process memory, so the deployment intentionally starts with one replica. `deploy/examples/hpa-after-shared-state.yaml` shows an HPA shape for a later version; add shared event storage and cross-pod stream fan-out before applying it. Update the image name, registry access, and cluster policies for your environment.
 
 ## Current scope
 
